@@ -18,7 +18,54 @@ class Solver(generator.Generator):
         Solves the sudoku problem in-place
     fill(self, grid: np.ndarray((9,9), np.int8) -> bool
         fills in the empty cells
+    cache_values(self, grid: np.ndarray((9,9), np.int8)) -> dict
+        this returns adictionary of possible values in a certain location
+    llowed_values(self, grid: np.ndarray((9,9), np.int8), pos: tuple) -> list
+        returns a list of possible/ valid values for a given location
     """
+
+    def cache_values(self, grid: np.ndarray((9,9), np.int8)) -> dict:
+        """
+        This returns a given loaction and the valid values for that location
+
+        Parameters
+        ----------
+        grid: np.ndarray((9,9), np.int8)
+            the grid being worked on
+        
+        Returns
+        -------
+        dict
+            a dictionary with coordinates as keys and valid candidates as values
+        """
+        cache = {}
+        for i, row in enumerate(grid):
+            for j, cell in enumerate(row):
+                if cell == 0:
+                    cache[(i, j)] = self.allowed_values(grid, (i,j))
+        return cache
+
+    def allowed_values(self, grid: np.ndarray((9,9), np.int8), pos: tuple) -> list:
+        """
+        Gets the valid candidates for a particular cell
+
+        Parameters
+        ----------
+        grid: np.ndarray((9,9), np.int8)
+            the grid being worked on
+        pos: tuple
+            the coordinates to work on
+        
+        Returns
+        -------
+        list
+            a list of valid candidates
+        """
+        available = []
+        for num in range(1, 10):
+            if self.is_valid(grid, num, pos):
+                available.append(num)
+        return available
 
     def solve(self, board: list[list[int]]|np.ndarray((9,9), np.int8), descending: bool= False) -> np.ndarray((9,9), np.int8):
         """
@@ -44,11 +91,11 @@ class Solver(generator.Generator):
         except AssertionError:
             print("Invalid boaard!!")
         print("Solving")
-        if self.fill(grid, descending):
+        if self.fill(grid, self.cache_values(grid), descending):
             return grid
         return None
 
-    def fill(self, grid: np.ndarray((9,9), np.int8), descending: bool = False) -> bool:
+    def fill(self, grid: np.ndarray((9,9), np.int8), cache: dict, descending: bool = False) -> bool:
         """
         Fills the board with values until a solutiion is found
 
@@ -56,7 +103,8 @@ class Solver(generator.Generator):
         ----------
         grid: np.ndarray((9,9), np.int8)
             the grid being solved
-        
+        cache: dict
+            stores the valid candidates for each empty cell
         Returns
         -------
         bool
@@ -66,11 +114,13 @@ class Solver(generator.Generator):
         if not pos:
             return True
         x, y = pos
-        a_range = range(9,0,-1) if descending else range(1,10)
-        for i in a_range:
+        
+        available = cache[pos] if not descending else reversed(cache[pos])
+        # rather than checking all values from 1..9, we are checking only the valid ones
+        for i in available:
             if self.is_valid(grid, i, pos):
                 grid[x, y] = i
-                if self.fill(grid, descending):
+                if self.fill(grid, cache, descending):
                     return True
             grid[x, y] = 0
         return False
