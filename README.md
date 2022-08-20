@@ -20,13 +20,16 @@ Run `main.py` to play
 ### 2. A Sudoku Solver and a Visualizer
 * The solving algorithm utilizes backtracking
 * The visualizer shows how the computer is processing potential candidates
+* Initially, all the logically deducible values are displayed  
+This means that each cell is analyzed for its potential candidates. If there is only one candidate, that candidate is accepted. after this, the backtracking begins
 * The current cell being worked on is highlighted. During the backtracking process, the wrong cells are highlighted in red
 ### 3. A Terminal Based Solver
 * While this lacks the visualization feature, a highly stylized Sudoku board can be viewed in the console
 * This uses the Unicode Box characters  
 __Note: The console version does not have a playable sudoku game although it may be easy to make__
 ### 4. A Sudoku Generator
-* With the intuition of a solver, I made a Sudoku generator which **does not** guarantee a unique solution
+* With the intuition of a solver, I made a Sudoku generator which **does not** guarantee a unique solution  
+However, the Sudoku game itself has a unique solution and is derived from the generator
 
 ## How to play
 * Use the sudoku rules
@@ -68,3 +71,22 @@ In this projects, "0" is used to indicate an empty cell
  ```
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+# Benchmark Details
+The Benchmark used to analyze the solving algorithm and accuracy is gotten from [Problem 96 in Project Euler](https://projecteuler.net/problem=96). With 50 grids of varying difficulty, the time taken to complete all 50 grids correctly is measured. Addidtionaly, the accuracy of the solving algorithm is measured
+
+- __Test 1__
+    * Unoptimized Backtracking algorithm  
+        * Time Taken: 15.19 seconds
+- __Test 2__
+    * Optimized Backtracking algorithm  
+        * Time Taken: 9.71 seconds
+        * Tweak based on frequency:
+            * Time Taken: 11.33 seconds
+- __Test 3__
+    * Inserting directly if a cell has only one candidate
+        * Time Taken: 3.93 seconds
+- __Test 4__
+    * Repeat the optimization in the third tweak while new values are found
+        * Time Taken: 0.79 seconds
+    

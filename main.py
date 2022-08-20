@@ -273,17 +273,23 @@ def solve():
     draw_background()
     draw_numbers()
     solver = Solver()
-    if fill(solver, grid.current_state):
+    candidates = solver.get_candidates(grid.current_state)
+    if fill(solver, grid.current_state, solver.cache_values(grid.current_state, candidates)[0]):
+        assert solver.validate(grid.current_state)
         pg.time.delay(2000)
         sys.exit()
     
-def fill(solver, grid):
+def fill(solver, grid, cache):
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            sys.exit()
     pos = solver.next_empty_cell(grid, row_by_row = True)
     if not pos:
         return True
     x, y = pos
     # rather than going thrugh to see if there are any other solutions
-    for i in range(1, 10):
+    available = cache[pos]
+    for i in available:
         if solver.is_valid(grid, i, pos):
             grid[x][y] = i
             draw_background()
@@ -302,7 +308,7 @@ def fill(solver, grid):
                     border_bottom_left_radius=buttomleftrad, border_bottom_right_radius=buttomrightrad)
             pg.display.flip()
             pg.time.delay(75)
-            if fill(solver, grid):
+            if fill(solver, grid, cache):
                 return True
             pg.draw.rect(screen, (255, 0, 0), pg.Rect(y * 50 + 25, x * 50 + 25, 50, 50), 3,\
                 border_top_left_radius=topleftrad, border_top_right_radius=toprightrad,\
@@ -338,6 +344,7 @@ def game_loop():
     if image:
         screen.blit(image, ((500 - image.get_width())/2,500))
     if len(correct) == 81:
+        assert Solver().validate(grid.current_state)
         complete()
     pg.display.flip()
 

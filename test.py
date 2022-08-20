@@ -1,6 +1,7 @@
 from solver import Solver
 from sudoku import Sudoku
 from generator import Generator
+from time import time
 
 # feel free to try out the given boards
 board1 =[[9,0,0,0,1,0,0,0,5],
@@ -47,10 +48,14 @@ hardest_sudoku_ever = [[8,0,0,0,0,0,0,0,0],
                        [0,0,8,5,0,0,0,1,0],
                        [0,9,0,0,0,0,4,0,0]]
 hardest_sudoku_solver = Solver()
+start = time()
 hs1 = hardest_sudoku_solver.solve(hardest_sudoku_ever)
+end = time() - start
+print(f"Time: {end}")
 Solver.print_board(hs1)
 assert Solver.validate(hs1)
 assert Solver.has_unique_solution(hardest_sudoku_ever)
+
 
 game = Sudoku()
 Sudoku.print_board(game)
