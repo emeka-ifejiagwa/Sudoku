@@ -43,7 +43,6 @@ However, the Sudoku game itself has a unique solution and is derived from the ge
 
 # Notes
 On quite a number of occassions, the sudoku board may take a while to be created. This is because a Sudoku with a unique solution is trying to be generated. However, there is no guarantee for the uniqueness of a created board but so far, in my tests, it works. Additionally, i used this project as an introduction to `numpy` and `pygame`.  
-In this projects, "0" is used to indicate an empty cell
 
 <img src="images/Sudoku.png" alt="The Sudoku Game" width="400">
 
