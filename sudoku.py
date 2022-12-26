@@ -1,8 +1,6 @@
 from solver import Solver
 import numpy as np
-import api
 from generator import Generator
-import random
 class Sudoku:
     """
     This is the sudoku game itself
@@ -28,11 +26,11 @@ class Sudoku:
 
     def __init__(self):
         problem = Generator().generate()
-        print("Trying...")
+        print("Generating...")
         while not Solver.has_unique_solution(problem):
             # randomly choose from the api or from the generator
-            problem = Generator().generate() if random.choice([1,2]) else api.generate()
-            print("Trying...")
+            problem = Generator().generate()
+            print("Generating...")
         self.initial_state = problem
         self.current_state = np.array(problem) # adeep copy of the problem as this would change constantly
         self.solution = Solver().solve(problem)

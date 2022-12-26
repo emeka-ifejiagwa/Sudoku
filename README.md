@@ -43,6 +43,7 @@ However, the Sudoku game itself has a unique solution and is derived from the ge
 
 # Notes
 On quite a number of occassions, the sudoku board may take a while to be created. This is because a Sudoku with a unique solution is trying to be generated. However, there is no guarantee for the uniqueness of a created board but so far, in my tests, it works. Additionally, i used this project as an introduction to `numpy` and `pygame`.  
+In this projects, "0" is used to indicate an empty cell
 
 <img src="images/Sudoku.png" alt="The Sudoku Game" width="400">
 
@@ -68,6 +69,8 @@ On quite a number of occassions, the sudoku board may take a while to be created
  ┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻
  # This is the console/ text based Sudoku Board
  ```
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # Benchmark Details
 The Benchmark used to analyze the solving algorithm and accuracy is gotten from [Problem 96 in Project Euler](https://projecteuler.net/problem=96). With 50 grids of varying difficulty, the time taken to complete all 50 grids correctly is measured. Addidtionaly, the accuracy of the solving algorithm is measured
